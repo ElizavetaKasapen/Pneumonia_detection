@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>ML application for pneumonia detection</title>
+		<link rel="stylesheet" href="style.css">
+	</head> 
+	<body >
+		<div class="center" style="text-align: center;  ">
+			<h3>ML application for pneumonia detection</h3>
+			<p>Please upload your X-Ray</p>
+			<form action="/upload_image/" enctype="multipart/form-data" method="post">
+				<input type="file" name="upload_image" data-buttontext="Upload X-Ray" accept="image/*">
+				<input type="submit" value="Send">
+			</form>
+		</div>
+	</body>
+</html>
+
