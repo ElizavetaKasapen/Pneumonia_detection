@@ -2,6 +2,7 @@ import torch
 import torchvision.models as models
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
+import torch.nn.functional as func
 import data_processing
 
 class nn_for_pneumonia_detection():
@@ -99,9 +100,23 @@ class nn_for_pneumonia_detection():
             #self.writer.add_scalars('Loss',{'train':epoch_loss_dict['train'],'validation':epoch_loss_dict['val']},epoch)
         return model
     
-    def load_model(self, path):
+    def load_model(self, path = "state_dict_model.pt"):
         model = self.create_model()
         model.load_state_dict(torch.load(path))
         model.eval() 
         #print(model.classifier)
         return model
+
+#add path
+    def to_predict(self, path):
+        data_transform = data_processing.data_preprocessing_for_net()
+        tensor = data_transform.transform_image_to_predict(path)
+        print(tensor)
+        model = self.load_model()
+        #or maybe outputs = model.forward(tensor)
+        with torch.set_grad_enabled(False):
+            outputs = model(tensor)
+            outputs = func.softmax(outputs, dim=1)
+        prob = list(outputs) #change
+        return y_hat
+        

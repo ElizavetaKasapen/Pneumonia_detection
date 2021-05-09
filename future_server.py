@@ -7,4 +7,4 @@ import data_processing
 
 act = Pneumonia_detection_net.nn_for_pneumonia_detection()
 #net = act.load_model("state_dict_model.pt")
-act.to_train()
+act.to_predict(path = "Pneumonia_data/data/test/BAC_PNEUMONIA/person88_bacteria_439.jpeg")
