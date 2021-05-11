@@ -1,18 +1,39 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 	<head>
 		<title>ML application for pneumonia detection</title>
-		<link rel="stylesheet" href="style.css">
+		<link rel="stylesheet" type = "text/css" href="{{url_for('static', filename='style.css')}}"> 
+		<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+		<script>
+			$(document).ready(function(){
+				$('input[type="file"]').change(function(e){
+					var fileName = e.target.files[0].name;
+					alert('The file "' + fileName +  '" has been selected.');
+				});
+			});
+			
+		</script>
 	</head> 
 	<body >
-		<div class="center" style="text-align: center;  ">
-			<h3>ML application for pneumonia detection</h3>
+		<header style="height: 150px; ">
+			<img src="{{url_for('static', filename='csn_label.png')}}"  style = "float: right; width:150px; " id = "csn_logo" alt=""/> 
+		</header>
+		
+		<main class="center" >
+			<!--put khai label here as url image static-->
+			<h2>ML application for pneumonia detection</h2>
 			<p>Please upload your X-Ray</p>
 			<form action="/upload_image/" enctype="multipart/form-data" method="post">
-				<input type="file" name="upload_image" data-buttontext="Upload X-Ray" accept="image/*">
-				<input type="submit" value="Send">
+				<div class="upload-btn-wrapper">
+					<button class="btn">Upload X-Ray</button>
+					<input type="file" name="upload_image" data-buttontext="Upload X-Ray" accept="image/*">
+				</div>
+				<div>
+					<input type="submit" value="Send" class="btn">
+				</div>
+				<img id = "output" width = "200" alt=""/> 
 			</form>
-		</div>
+		</main >
 	</body>
 </html>
 
