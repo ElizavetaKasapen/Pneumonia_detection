@@ -29,10 +29,16 @@
 					<input type="file" name="upload_image" data-buttontext="Upload X-Ray" accept="image/*">
 				</div>
 				<div>
-					<input type="submit" value="Send" class="btn">
+					<input  type="submit" value="Send" class="btn">
 				</div>
-				<img id = "output" width = "200" alt=""/> 
-			</form>
+				{%if prob%}
+				<p>Your file: {{filename}}</p>
+				<p>The probability of a normal lung condition: {{'%0.4f'|format(prob[1]|float)}}</p>
+				<p>The probability of bacterial pneumonia: {{'%0.4f'|format(prob[0]|float)}}</p>
+				<p>The probability of viral pneumonia: {{'%0.4f'|format(prob[2]|float)}}</p>
+				{% endif %}
+				
+				<img src = "data:image/*;base64,{{image}}" id = "output" width = "200" alt=""/>
 		</main >
 	</body>
 </html>
