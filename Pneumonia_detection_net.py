@@ -2,6 +2,7 @@ import torch
 import torchvision.models as models
 from torch.utils.tensorboard import SummaryWriter
 from tqdm import tqdm
+import numpy as np
 import torch.nn.functional as func
 import data_processing
 
@@ -117,6 +118,6 @@ class nn_for_pneumonia_detection():
         with torch.set_grad_enabled(False):
             outputs = model(tensor)
             outputs = func.softmax(outputs, dim=1)
-        prob = list(outputs) #change
-        return y_hat
+        outputs = outputs.tolist()[0] #change. return dictionary class name - prob.
+        return outputs
         
