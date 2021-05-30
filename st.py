@@ -18,19 +18,19 @@ uploaded_file = st.file_uploader('Upload image...', type=['jpeg', 'jpg', 'png'])
 def predict(image):
 	net = Pneumonia_detection_net.nn_for_pneumonia_detection()
 	prediction = net.to_predict(image)
-	prediction = prediction.detach().numpy()
+	prediction = prediction.detach().numpy()[0]
+	#preds_class = prediction.argmax()
 
-	df = pd.DataFrame(data=prediction[0], index=['Bacterial', 'Normal', 'Viral'], columns=['confidence'])
-
-	st.write(f'''### 👍 The probability of a normal lung condition:**{np.round(prediction[0][1], 3)}**''')
-	st.write(f'''### 🧫 The probability of bacterial pneumonia:  **{np.round(prediction[0][0], 3)}**''')
-	st.write(f'''### 🦠 The probability of viral pneumonia: **{np.round(prediction[0][2], 3)}**''')
-	
+	df = pd.DataFrame(data=prediction, index=['Bacterial', 'Normal', 'Viral'], columns=['confidence'])
+	st.write(f'''### 👍 The probability of a normal lung condition:**{"{0:.2f}".format(round(prediction[1],3))}**''')
+	st.write(f'''### 🧫 The probability of bacterial pneumonia:  **{"{0:.2f}".format(round(prediction[0],3))}**''')
+	st.write(f'''### 🦠 The probability of viral pneumonia: **{"{0:.2f}".format(round(prediction[2],3))}**''')
+	#st.write(f'''### Diagnosis:**{preds_class}**''')
 	st.write('')
 	st.bar_chart(df)
 if uploaded_file is not None:
 	image = Image.open(uploaded_file)
-	st.image(image, caption='This x-ray will be diagnosed...', use_column_width=True)
+	st.image(image, caption='This x-ray will be diagnosed...', width = 300 )
 
-	if st.button('Predict 🧠'):
+	if st.button('Predict 🩺'):
 		predict(image)
